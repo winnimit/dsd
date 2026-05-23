@@ -1,164 +1,112 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ไพ่ดาวส่องดวง</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-            padding: 40px;
-            text-align: center;
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2.5em;
-        }
-        
-        .subtitle {
-            color: #667eea;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-        
-        .description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            font-size: 1.1em;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 40px 0;
-        }
-        
-        .feature {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .feature h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .feature p {
-            color: #666;
-            font-size: 0.95em;
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        button {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
-            border: 2px solid #667eea;
-        }
-        
-        .btn-secondary:hover {
-            background: #667eea;
-            color: white;
-        }
-        
-        .footer {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #eee;
-            color: #999;
-            font-size: 0.9em;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>✨ ไพ่ดาวส่องดวง ✨</h1>
-        <p class="subtitle">ค้นพบความลับของดวงชะตากับไพ่พิเศษ</p>
-        
-        <p class="description">
-            เว็บไซต์นี้เป็นแหล่งรวมความรู้และประสบการณ์เกี่ยวกับการดูดวงผ่านไพ่มหัศจรรย์
-        </p>
-        
-        <div class="features">
-            <div class="feature">
-                <h3>🔮 ที่ปรึกษาออนไลน์</h3>
-                <p>รับคำปรึกษาจากผู้เชี่ยวชาญด้านการดูดวง</p>
-            </div>
-            <div class="feature">
-                <h3>📚 บทเรียน</h3>
-                <p>เรียนรู้วิธีการอ่านไพ่ขั้นพื้นฐาน</p>
-            </div>
-            <div class="feature">
-                <h3>⭐ การทำนาย</h3>
-                <p>ทำนายอนาคตของคุณแบบเที่ยงตรง</p>
-            </div>
-            <div class="feature">
-                <h3>💫 ชุมชน</h3>
-                <p>เชื่อมต่อกับสมาชิกอื่นๆ ในชุมชน</p>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ดาวส่องดวง</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow" id="readingEyebrow">รูปแบบที่ 1</p>
+          <h1 id="readingTitle">เปิดไพ่ไม่ระบุจำนวน</h1>
         </div>
-        
-        <div class="buttons">
-            <button class="btn-primary">เริ่มต้นทันที</button>
-            <button class="btn-secondary">เรียนรู้เพิ่มเติม</button>
+        <strong class="app-title">
+          <img src="logo-dao-song-duang.png" alt="" />
+          <span>ไพ่ดาวส่องดวง</span>
+        </strong>
+        <div class="header-actions">
+          <nav class="reading-menu" aria-label="เลือกรูปแบบการทำนาย">
+            <button class="menu-button" id="freeReadingButton" type="button">X ใบ</button>
+            <button class="menu-button" id="birthReadingButton" type="button">12 ใบ</button>
+            <button class="menu-button" id="birthDoubleReadingButton" type="button">24 ใบ</button>
+            <button class="menu-button" id="astroReadingButton" type="button">โหราศาสตร์ไทย</button>
+          </nav>
+          <button class="clear-button" id="clearButton" type="button">ล้างไพ่</button>
         </div>
-        
-        <div class="footer">
-            <p>© 2026 ไพ่ดาวส่องดวง | สร้างด้วย ❤️</p>
-        </div>
+      </header>
+
+      <section class="table-layout">
+        <section class="card-frame teacher-frame" aria-labelledby="teacherTitle">
+          <div class="frame-header">
+            <h2 id="teacherTitle">ไพ่ครู</h2>
+          </div>
+          <div class="teacher-stack" aria-label="ไพ่ครู">
+            <div class="teacher-card">
+              <img src="ไพ่ครู 2.jpg" alt="ไพ่ครู 2" />
+              <span>ไพ่ครู 2</span>
+            </div>
+            <div class="teacher-card">
+              <img src="ไพ่ครู 3.jpg" alt="ไพ่ครู 3" />
+              <span>ไพ่ครู 3</span>
+            </div>
+            <div class="teacher-card">
+              <img src="ไพ่ครู 4.jpg" alt="ไพ่ครู 4" />
+              <span>ไพ่ครู 4</span>
+            </div>
+            <div class="teacher-card">
+              <img src="ไพ่ครู 5.jpg" alt="ไพ่ครู 5" />
+              <span>ไพ่ครู 5</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="reading-board" id="readingBoard">
+          <section class="card-frame draw-frame" id="drawFrame" aria-labelledby="drawTitle">
+            <div class="frame-header">
+              <h2 id="drawTitle">กองไพ่</h2>
+              <span id="remainingCount">72 ใบ</span>
+            </div>
+            <div class="deck-grid" id="deckGrid" aria-label="ไพ่สำหรับเลือก"></div>
+          </section>
+
+          <section class="card-frame selected-frame" id="selectedFrame" aria-labelledby="selectedTitle">
+            <div class="frame-header">
+              <h2 id="selectedTitle">ไพ่ที่เปิดแล้ว</h2>
+              <span id="selectedCount">0 ใบ</span>
+            </div>
+            <div class="selected-grid" id="selectedGrid" aria-label="ไพ่ที่เลือกแล้ว"></div>
+          </section>
+        </section>
+
+        <section class="card-frame birth-spread-frame" id="birthSpreadFrame" hidden aria-labelledby="birthSpreadTitle">
+          <div class="frame-header">
+            <h2 id="birthSpreadTitle">ผังพื้นชะตา</h2>
+            <span>12 เรือน</span>
+          </div>
+          <div class="birth-spread-grid" id="birthSpreadGrid" aria-label="ผังไพ่พื้นชะตา"></div>
+        </section>
+
+        <section class="card-frame astro-input-frame" id="astroInputFrame" hidden aria-labelledby="astroInputTitle">
+          <div class="frame-header">
+            <h2 id="astroInputTitle">รับค่าราศี</h2>
+            <span id="astroInputCount">0/11</span>
+          </div>
+          <div class="astro-input-grid" id="astroInputGrid" aria-label="รับค่าดาวตามราศี"></div>
+        </section>
+
+        <section class="card-frame astro-result-frame" id="astroResultFrame" hidden aria-labelledby="astroResultTitle">
+          <div class="frame-header">
+            <h2 id="astroResultTitle">ผลโหราศาสตร์ไทย</h2>
+            <span id="astroResultStatus">รอข้อมูล</span>
+          </div>
+          <div class="astro-result-grid" id="astroResultGrid" aria-label="ผลโหราศาสตร์ไทย"></div>
+        </section>
+      </section>
+    </main>
+
+    <div class="card-modal" id="cardModal" hidden>
+      <button class="modal-backdrop" id="modalBackdrop" type="button" aria-label="ปิดภาพขยาย"></button>
+      <div class="modal-content" role="dialog" aria-modal="true" aria-label="ภาพไพ่ขยาย">
+        <button class="modal-close" id="modalClose" type="button" aria-label="ปิด">×</button>
+        <button class="modal-print" id="modalPrint" type="button">Print</button>
+        <div class="modal-images" id="modalImages"></div>
+        <strong id="modalCaption" hidden></strong>
+      </div>
     </div>
-</body>
+
+    <script src="script.js"></script>
+  </body>
 </html>
