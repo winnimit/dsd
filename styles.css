@@ -613,6 +613,12 @@ h2 {
   grid-template-rows: minmax(0, 1fr) auto;
 }
 
+.modal-content-house-spread {
+  justify-items: start;
+  align-items: start;
+  overflow: auto;
+}
+
 .modal-content-scrollable {
   height: 92vh;
 }
@@ -723,17 +729,19 @@ h2 {
 }
 
 .astro-house-orbit {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(210px, 1fr));
+  display: inline-grid;
+  grid-template-columns: repeat(5, 210px);
   grid-template-rows: repeat(7, minmax(150px, auto));
   gap: clamp(14px, 2vw, 26px);
   align-content: start;
   justify-items: center;
-  width: 100%;
+  width: max-content;
+  max-width: none;
   min-width: 1160px;
   height: auto;
+  max-height: none;
   min-height: 0;
-  overflow: auto;
+  overflow: visible;
   background: #ffffff;
   padding: clamp(14px, 2vw, 24px);
 }
@@ -1029,12 +1037,12 @@ h2 {
   }
 
   .astro-house-orbit {
-    min-width: 820px;
-    min-height: 760px;
+    min-width: 1160px;
+    min-height: 0;
   }
 
   .astro-house-orbit-cell {
-    width: 240px;
+    width: min(100%, 300px);
   }
 }
 
