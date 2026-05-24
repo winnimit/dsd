@@ -261,7 +261,7 @@ function renderSelectedCards() {
     const alt = isBirthReading() ? "หลังไพ่" : card.name;
     item.innerHTML = `<img src="${image}" alt="${alt}" />`;
     if (!isBirthReading()) {
-      item.addEventListener("click", () => openCardModal(card));
+      item.addEventListener("click", openFreeReadingModal);
     }
     selectedGrid.append(item);
   });
@@ -471,6 +471,24 @@ function openCardModal(cards, caption = "") {
   cardModal.hidden = false;
 }
 
+function openFreeReadingModal() {
+  modalContent.classList.remove("modal-content-astro");
+  modalContent.classList.add("modal-content-free-reading", "modal-content-scrollable");
+  modalImages.className = "modal-images free-reading-gallery";
+  modalImages.innerHTML = selectedCards
+    .map(
+      (card) => `
+        <div class="free-reading-card">
+          <img src="${card.image}" alt="${card.name}" />
+        </div>
+      `,
+    )
+    .join("");
+  modalCaption.textContent = "ทำนายรายคำถาม";
+  modalCaption.hidden = false;
+  cardModal.hidden = false;
+}
+
 function openAstroZodiacModal(sign) {
   const { cardA, cardB, cardC, cardD, cardE, cardF, cardG } = getAstroPopupCards(sign);
   const rows = [
@@ -531,41 +549,40 @@ function getHouseToSign() {
 function openAstroHouseSpreadModal() {
   const houseToSign = getHouseToSign();
   modalContent.classList.add("modal-content-astro", "modal-content-house-spread", "modal-content-scrollable");
-  modalImages.className = "modal-images astro-house-spread-grid";
-  modalImages.innerHTML = "";
-
-  for (let row = 1; row <= 5; row += 1) {
-    for (let column = 1; column <= 5; column += 1) {
-      const house = birthHouses.find((item) => item.row === row && item.column === column);
-      const cell = document.createElement("article");
-
-      if (!house) {
-        cell.className = "astro-house-cell astro-house-cell-empty";
-        modalImages.append(cell);
-        continue;
-      }
-
-      const sign = houseToSign[house.house];
+  modalImages.className = "modal-images astro-house-orbit";
+  modalImages.innerHTML = `
+    <div class="astro-house-orbit-logo">
+      <img src="logo-dao-song-duang.png" alt="" />
+    </div>
+  `;
+  modalImages.innerHTML += houseOrder
+    .map((house, index) => {
+      const sign = houseToSign[house];
       const { cardA, cardB, cardC, cardD } = getAstroPopupCards(sign);
-      cell.className = "astro-house-cell";
-      cell.innerHTML = `
-        <strong>เรือน${house.house}</strong>
-        <span>ราศี${sign}</span>
-        <div class="astro-house-card-grid">
-          ${[cardA, cardB, cardC, cardD]
-            .map(
-              (card) => `
-                <div class="astro-house-card">
-                  <img src="${card.image}" alt="${card.name}" />
-                </div>
-              `,
-            )
-            .join("")}
-        </div>
+      return `
+        <article class="astro-house-orbit-cell astro-house-orbit-${house} astro-house-orbit-pos-${index + 1}">
+          <strong>เรือน${house}</strong>
+          <span>ราศี${sign}</span>
+          <div class="astro-house-card-grid">
+            ${[cardA, cardB, cardC, cardD]
+              .map(
+                (card) => `
+                  <div class="astro-house-card">
+                    <img src="${card.image}" alt="${card.name}" />
+                  </div>
+                `,
+              )
+              .join("")}
+          </div>
+        </article>
       `;
-      modalImages.append(cell);
-    }
-  }
+    })
+    .join("");
+
+  modalImages.querySelectorAll(".astro-house-orbit-cell").forEach((cell) => {
+    cell.addEventListener("mouseenter", () => cell.classList.add("is-hovered"));
+    cell.addEventListener("mouseleave", () => cell.classList.remove("is-hovered"));
+  });
 
   modalCaption.textContent = "ผังพื้นชะตา";
   modalCaption.hidden = false;
@@ -609,7 +626,7 @@ function openAstroHouseListModal() {
 
 function closeCardModal() {
   cardModal.hidden = true;
-  modalContent.classList.remove("modal-content-astro", "modal-content-house-spread", "modal-content-house-list", "modal-content-scrollable");
+  modalContent.classList.remove("modal-content-astro", "modal-content-house-spread", "modal-content-house-list", "modal-content-free-reading", "modal-content-scrollable");
   modalImages.className = "modal-images";
   modalImages.innerHTML = "";
   modalCaption.textContent = "";
