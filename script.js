@@ -371,6 +371,10 @@ function renderAstroResult() {
         openAstroZodiacModal(sign);
       }
     });
+    cell.querySelectorAll(".astro-card-row img").forEach((image) => {
+      image.addEventListener("mouseenter", () => image.classList.add("is-hovered"));
+      image.addEventListener("mouseleave", () => image.classList.remove("is-hovered"));
+    });
     astroResultGrid.append(cell);
   });
 
