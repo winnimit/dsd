@@ -448,16 +448,15 @@ function getAssignedSignForSignLord(sign) {
 function getPersonalMatrixTokens(baseSign, onlyEightAtOneOffset) {
   const tokens = new Set();
 
-  addAssignedTokenAtSign(tokens, baseSign);
-  [4, 7, 8, 11].forEach((offset) => addAssignedTokenAtSign(tokens, getOffsetSign(baseSign, offset)));
+  addAssignedTokensAtSign(tokens, baseSign);
+  [4, 7, 8, 11].forEach((offset) => addAssignedTokensAtSign(tokens, getOffsetSign(baseSign, offset)));
 
-  const oneOffsetToken = getAssignedNumberTokenAtSign(getOffsetSign(baseSign, 1));
-  if (oneOffsetToken && (!onlyEightAtOneOffset || oneOffsetToken === "๘")) {
-    tokens.add(oneOffsetToken);
-  }
+  getAssignedNumberTokensAtSign(getOffsetSign(baseSign, 1))
+    .filter((token) => !onlyEightAtOneOffset || token === "๘")
+    .forEach((token) => tokens.add(token));
 
   if (personalMatrixCardinalSigns.includes(baseSign)) {
-    personalMatrixCardinalSigns.forEach((sign) => addAssignedTokenAtSign(tokens, sign));
+    personalMatrixCardinalSigns.forEach((sign) => addAssignedTokensAtSign(tokens, sign));
   }
 
   return tokens;
@@ -472,15 +471,12 @@ function getOffsetSign(sign, offset) {
   return zodiacSigns[(index + offset) % zodiacSigns.length];
 }
 
-function addAssignedTokenAtSign(tokens, sign) {
-  const token = getAssignedNumberTokenAtSign(sign);
-  if (token) {
-    tokens.add(token);
-  }
+function addAssignedTokensAtSign(tokens, sign) {
+  getAssignedNumberTokensAtSign(sign).forEach((token) => tokens.add(token));
 }
 
-function getAssignedNumberTokenAtSign(sign) {
-  return astroCardTokens.find((token) => astroAssignments[token] === sign);
+function getAssignedNumberTokensAtSign(sign) {
+  return astroCardTokens.filter((token) => astroAssignments[token] === sign);
 }
 
 function getSignToHouse() {
