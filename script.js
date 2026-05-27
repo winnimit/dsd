@@ -448,8 +448,7 @@ function getAssignedSignForSignLord(sign) {
 function getPersonalMatrixTokens(baseSign) {
   const tokens = new Set();
 
-  addAssignedTokensAtSign(tokens, baseSign);
-  [4, 7, 8].forEach((offset) => addAssignedTokensAtSign(tokens, getOffsetSign(baseSign, offset)));
+  [4, 6, 8].forEach((offset) => addAssignedTokensAtSign(tokens, getOffsetSign(baseSign, offset)));
   getAssignedNumberTokensAtSign(getOffsetSign(baseSign, 11))
     .filter((token) => token !== "๘" && token !== "๙")
     .forEach((token) => tokens.add(token));
