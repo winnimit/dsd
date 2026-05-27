@@ -469,7 +469,13 @@ h2 {
   align-self: center;
   justify-self: center;
   gap: 8px;
-  width: min(92%, 320px);
+  width: min(96%, 520px);
+  z-index: 3;
+}
+
+.astro-result-action-buttons {
+  display: grid;
+  gap: 8px;
 }
 
 .astro-result-actions button {
@@ -481,6 +487,43 @@ h2 {
   background: var(--green);
   font-size: clamp(11px, 1.7vh, 15px);
   line-height: 1.25;
+}
+
+.astro-personal-matrix {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.astro-personal-matrix table {
+  width: 100%;
+  min-width: 360px;
+  border-collapse: collapse;
+  color: var(--ink);
+  font-size: clamp(8px, 1.25vh, 11px);
+  line-height: 1.15;
+}
+
+.astro-personal-matrix th,
+.astro-personal-matrix td {
+  min-width: 24px;
+  height: clamp(16px, 2.25vh, 22px);
+  padding: 1px 4px;
+  border: 1px solid var(--line);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.astro-personal-matrix th:first-child {
+  min-width: 66px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.astro-personal-matrix thead th {
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .astro-empty-result {

@@ -71,6 +71,7 @@ const zodiacSigns = [
 
 const astroTokens = ["๑", "๒", "๓", "๔", "๕", "๖", "๗", "๘", "๙", "๐", "ล"];
 const astroCardTokens = ["๑", "๒", "๓", "๔", "๕", "๖", "๗", "๘", "๙", "๐"];
+const personalMatrixCardinalSigns = ["เมษ", "กรกฎ", "ตุลย์", "มกร"];
 const kriyaDaoCardMapping = {
   "๑": "11.jpg",
   "๒": "12.jpg",
@@ -381,12 +382,105 @@ function renderAstroResult() {
   const actions = document.createElement("div");
   actions.className = "astro-result-actions";
   actions.innerHTML = `
-    <button type="button" id="astroSpreadButton">แสดงรูปแบบผังพื้นชะตา</button>
-    <button type="button" id="astroListButton">แสดงรูปแบบลิสต์ภพเรือน</button>
+    <div class="astro-result-action-buttons">
+      <button type="button" id="astroSpreadButton">แสดงรูปแบบผังพื้นชะตา</button>
+      <button type="button" id="astroListButton">แสดงรูปแบบลิสต์ภพเรือน</button>
+    </div>
+    ${renderPersonalMatrix()}
   `;
   actions.querySelector("#astroSpreadButton").addEventListener("click", openAstroHouseSpreadModal);
   actions.querySelector("#astroListButton").addEventListener("click", openAstroHouseListModal);
   astroResultGrid.append(actions);
+}
+
+function renderPersonalMatrix() {
+  const rows = getPersonalMatrixRows();
+
+  return `
+    <div class="astro-personal-matrix">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th colspan="${astroCardTokens.length}">ดาวประจำตัว</th>
+          </tr>
+          <tr>
+            <th></th>
+            ${astroCardTokens.map((token) => `<th>${token}</th>`).join("")}
+          </tr>
+        </thead>
+        <tbody>
+          ${rows
+            .map(
+              (row) => `
+                <tr>
+                  <th scope="row">${row.label}</th>
+                  ${astroCardTokens.map((token) => `<td>${row.tokens.has(token) ? "x" : ""}</td>`).join("")}
+                </tr>
+              `,
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function getPersonalMatrixRows() {
+  const moonSign = astroAssignments["๒"];
+  const moonLordSign = getAssignedSignForSignLord(moonSign);
+  const ascendantSign = astroAssignments["ล"];
+  const ascendantLordSign = getAssignedSignForSignLord(ascendantSign);
+
+  return [
+    { label: "จันทร์", tokens: getPersonalMatrixTokens(moonSign, false) },
+    { label: "ตนุจันทร์", tokens: getPersonalMatrixTokens(moonLordSign, true) },
+    { label: "ลัคนา", tokens: getPersonalMatrixTokens(ascendantSign, true) },
+    { label: "ตนุลัคนา", tokens: getPersonalMatrixTokens(ascendantLordSign, true) },
+  ];
+}
+
+function getAssignedSignForSignLord(sign) {
+  const lordToken = zodiacKasetPlanetMapping[sign];
+  return astroAssignments[lordToken];
+}
+
+function getPersonalMatrixTokens(baseSign, onlyEightAtOneOffset) {
+  const tokens = new Set();
+
+  addAssignedTokenAtSign(tokens, baseSign);
+  [4, 7, 8, 11].forEach((offset) => addAssignedTokenAtSign(tokens, getOffsetSign(baseSign, offset)));
+
+  const oneOffsetToken = getAssignedNumberTokenAtSign(getOffsetSign(baseSign, 1));
+  if (oneOffsetToken && (!onlyEightAtOneOffset || oneOffsetToken === "๘")) {
+    tokens.add(oneOffsetToken);
+  }
+
+  if (personalMatrixCardinalSigns.includes(baseSign)) {
+    personalMatrixCardinalSigns.forEach((sign) => addAssignedTokenAtSign(tokens, sign));
+  }
+
+  return tokens;
+}
+
+function getOffsetSign(sign, offset) {
+  const index = zodiacSigns.indexOf(sign);
+  if (index === -1) {
+    return null;
+  }
+
+  return zodiacSigns[(index + offset) % zodiacSigns.length];
+}
+
+function addAssignedTokenAtSign(tokens, sign) {
+  const token = getAssignedNumberTokenAtSign(sign);
+  if (token) {
+    tokens.add(token);
+  }
+}
+
+function getAssignedNumberTokenAtSign(sign) {
+  return astroCardTokens.find((token) => astroAssignments[token] === sign);
 }
 
 function getSignToHouse() {
